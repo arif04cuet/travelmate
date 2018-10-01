@@ -4,10 +4,10 @@ namespace Deployer;
 require 'recipe/laravel.php';
 
 // Project name
-set('application', 'Tailor');
+set('application', 'TravelMate');
 
 // Project repository
-set('repository', 'git@github.com:arif04cuet/tailor.git');
+set('repository', 'git@github.com:arif04cuet/travelmate.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true); 
@@ -25,7 +25,7 @@ add('writable_dirs', []);
 host('178.128.160.59')
     ->user('arif04cuet')
     ->identityFile('~/.ssh/id_rsa')
-    ->set('deploy_path', '/var/www/html/tailor');
+    ->set('deploy_path', '/var/www/html/travelmate');
     
 // Tasks
 
