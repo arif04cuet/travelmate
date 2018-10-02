@@ -14,7 +14,7 @@ class SocialAuthController extends Controller
         try {
             //return Socialite::with($account)->redirect();
             return Socialite::driver('facebook')->fields([
-                'first_name', 'last_name', 'email', 'birthday', 'location'
+                'first_name', 'last_name', 'email', 'gender', 'birthday', 'location'
             ])->scopes([
                 'email', 'user_birthday', 'user_location'
             ])->redirect();
@@ -33,7 +33,7 @@ class SocialAuthController extends Controller
         //$socialUser = Socialite::with($account)->user();
 
         $socialUser = Socialite::driver('facebook')->fields([
-            'first_name', 'last_name', 'email', 'birthday', 'location'
+            'first_name', 'last_name', 'email', 'gender', 'birthday', 'location'
         ])->user();
 
 
