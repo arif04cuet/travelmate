@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Socialite;
+use App\Profile;
 
 
 class SocialAuthController extends Controller
@@ -36,8 +37,8 @@ class SocialAuthController extends Controller
             'first_name', 'last_name', 'email', 'gender', 'birthday', 'location'
         ])->user();
 
+        $socialDetailsUser = $socialUser->getUser();
 
-        dd($socialUser);
       /*
             Gets the user in our database where the provider ID
             returned matches a user we have stored.
@@ -51,9 +52,10 @@ class SocialAuthController extends Controller
         user in the database before logging them in.
          */
         if ($user == null) {
+
             $newUser = new User();
 
-            $newUser->name = $socialUser->getName();
+            $newUser->name = $socialUser->getName() ? $socialUser->getName() : $socialDetailsUser['first_name'] . ' ' . $socialDetailsUser['last_name'];
             $newUser->email = $socialUser->getEmail() == '' ? '' : $socialUser->getEmail();
             $newUser->avatar = $socialUser->getAvatar();
             $newUser->password = '';
@@ -61,6 +63,15 @@ class SocialAuthController extends Controller
             $newUser->provider_id = $socialUser->getId();
 
             $newUser->save();
+
+            //save profile
+            $profile = Profile::create([
+                'user_id' => $newUser->id,
+                'gender' => $socialDetailsUser['gender'] ? $socialDetailsUser['gender'] : '',
+                'birthday' => $socialDetailsUser['birthday'],
+                'location' => $socialDetailsUser['location']['name']
+            ]);
+            $newUser->profile()->save($profile);
 
             $user = $newUser;
         }
