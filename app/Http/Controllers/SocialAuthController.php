@@ -12,7 +12,13 @@ class SocialAuthController extends Controller
     public function getSocialRedirect($account)
     {
         try {
-            return Socialite::with($account)->redirect();
+            //return Socialite::with($account)->redirect();
+            return Socialite::driver('facebook')->fields([
+                'first_name', 'last_name', 'email', 'gender', 'birthday', 'location'
+            ])->scopes([
+                'email', 'user_birthday', 'user_location'
+            ])->redirect();
+
         } catch (\InvalidArgumentException $e) {
             return redirect('/login');
         }
@@ -24,8 +30,14 @@ class SocialAuthController extends Controller
         Grabs the user who authenticated via social account.
          */
 
-        $socialUser = Socialite::with($account)->user();
+        //$socialUser = Socialite::with($account)->user();
 
+        $socialUser = Socialite::driver('facebook')->fields([
+            'first_name', 'last_name', 'email', 'gender', 'birthday', 'location'
+        ])->user();
+
+
+        dd($socialUser);
       /*
             Gets the user in our database where the provider ID
             returned matches a user we have stored.
