@@ -38,7 +38,7 @@ class SocialAuthController extends Controller
         ])->user();
 
         $socialDetailsUser = $socialUser->user;
-        dd($socialDetailsUser);
+        //dd($socialDetailsUser);
       /*
             Gets the user in our database where the provider ID
             returned matches a user we have stored.
