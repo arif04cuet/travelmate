@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Socialite;
 use App\Profile;
+use App\User;
 
 
 class SocialAuthController extends Controller
