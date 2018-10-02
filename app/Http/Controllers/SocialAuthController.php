@@ -37,8 +37,8 @@ class SocialAuthController extends Controller
             'first_name', 'last_name', 'email', 'gender', 'birthday', 'location'
         ])->user();
 
-        $socialDetailsUser = $socialUser->user; 
-
+        $socialDetailsUser = $socialUser->user;
+        dd($socialDetailsUser);
       /*
             Gets the user in our database where the provider ID
             returned matches a user we have stored.
