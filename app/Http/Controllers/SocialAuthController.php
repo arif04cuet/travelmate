@@ -65,13 +65,13 @@ class SocialAuthController extends Controller
             $newUser->save();
 
             //save profile
-            $profile = Profile::create([
-                'user_id' => $newUser->id,
-                'gender' => $socialDetailsUser['gender'] ? $socialDetailsUser['gender'] : '',
-                'birthday' => $socialDetailsUser['birthday'],
-                'location' => $socialDetailsUser['location']['name']
-            ]);
-            $newUser->profile()->save($profile);
+            // $profile = Profile::create([
+            //     'user_id' => $newUser->id,
+            //     'gender' => $socialDetailsUser['gender'] ? $socialDetailsUser['gender'] : '',
+            //     'birthday' => $socialDetailsUser['birthday'],
+            //     'location' => $socialDetailsUser['location']['name']
+            // ]);
+            // $newUser->profile()->save($profile);
 
             $user = $newUser;
         }
