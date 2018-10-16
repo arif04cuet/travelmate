@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Socialite;
 use App\Profile;
 use App\User;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 
 class SocialAuthController extends Controller
@@ -67,13 +68,13 @@ class SocialAuthController extends Controller
             $newUser->save();
 
             //save profile
-            // $profile = Profile::create([
-            //     'user_id' => $newUser->id,
-            //     'gender' => $socialDetailsUser['gender'] ? $socialDetailsUser['gender'] : '',
-            //     'birthday' => $socialDetailsUser['birthday'],
-            //     'location' => $socialDetailsUser['location']['name']
-            // ]);
-            // $newUser->profile()->save($profile);
+            $profile = new Profile();
+            $profile->user_id = $newUser->id;
+            $profile->gender = $socialDetailsUser['gender'] ? $socialDetailsUser['gender'] : '';
+            $profile->birthday = $socialDetailsUser['birthday'];
+            $profile->location = $socialDetailsUser['location']['name'];
+
+            $newUser->profile()->save($profile);
 
             $user = $newUser;
         }
@@ -86,7 +87,7 @@ class SocialAuthController extends Controller
       /*
         Redirect to the app
          */
-        return redirect('/');
+        return redirect('/home');
     }
 
 }
