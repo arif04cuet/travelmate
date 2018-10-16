@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Socialite;
 use App\Profile;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 
 class SocialAuthController extends Controller
@@ -64,16 +65,20 @@ class SocialAuthController extends Controller
             $newUser->provider = $account;
             $newUser->provider_id = $socialUser->getId();
 
-            $newUser->save();
 
             //save profile
             $profile = new Profile();
-            $profile->user_id = $newUser->id;
             $profile->gender = $socialDetailsUser['gender'] ? $socialDetailsUser['gender'] : '';
             $profile->birthday = $socialDetailsUser['birthday'];
             $profile->location = $socialDetailsUser['location']['name'];
 
-            $newUser->profile()->save($profile);
+
+            //Transaction
+            DB::transaction(function () use ($newUser, $profile) {
+                $newUser->save();
+                $profile->user_id = $newUser->id;
+                User::find($user->id)->profile()->save($profile);
+            });
 
             $user = $newUser;
         }
