@@ -15,6 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test', function () {
+
+    $start_date = '10/12/2018';
+    $convertedDate = DateTime::createFromFormat('m/d/Y', $start_date)->format('Y-m-d H:i:s');
+    return $convertedDate;
+});
 
 Route::get('/login/{social}', 'SocialAuthController@getSocialRedirect')
     ->middleware('guest');

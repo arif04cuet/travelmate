@@ -66,10 +66,11 @@ class SocialAuthController extends Controller
             $newUser->provider_id = $socialUser->getId();
             //$newUser->save();
 
+            
             //save profile
             $profile = new Profile();
             $profile->gender = isset($socialDetailsUser['gender']) ? $socialDetailsUser['gender'] : '';
-            $profile->birthday = $socialDetailsUser['birthday'];
+            $profile->birthday = DateTime::createFromFormat('m/d/Y', $socialDetailsUser['birthday'])->format('Y-m-d H:i:s');;
             $profile->location = $socialDetailsUser['location']['name'];
 
 
