@@ -76,8 +76,8 @@ class SocialAuthController extends Controller
             //Transaction
             DB::transaction(function () use ($newUser, $profile) {
                 $newUser->save();
-                $profile->user_id = $newUser->id;
-                User::find($user->id)->profile()->save($profile);
+                //$profile->user_id = $newUser->id;
+                //User::find($user->id)->profile()->save($profile);
             });
 
             $user = $newUser;
