@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use Socialite;
 use App\Profile;
 use App\User;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 
 class SocialAuthController extends Controller
