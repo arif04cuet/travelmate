@@ -64,20 +64,20 @@ class SocialAuthController extends Controller
             $newUser->password = '';
             $newUser->provider = $account;
             $newUser->provider_id = $socialUser->getId();
-            $newUser->save();
+            //$newUser->save();
 
             //save profile
             $profile = new Profile();
-            $profile->gender = $socialDetailsUser['gender'] ? $socialDetailsUser['gender'] : '';
+            $profile->gender = isset($socialDetailsUser['gender']) ? $socialDetailsUser['gender'] : '';
             $profile->birthday = $socialDetailsUser['birthday'];
             $profile->location = $socialDetailsUser['location']['name'];
 
 
             //Transaction
             DB::transaction(function () use ($newUser, $profile) {
-                //$newUser->save();
-                //$profile->user_id = $newUser->id;
-                //User::find($user->id)->profile()->save($profile);
+                $newUser->save();
+                $profile->user_id = $newUser->id;
+                User::find($user->id)->profile()->save($profile);
             });
 
             $user = $newUser;
