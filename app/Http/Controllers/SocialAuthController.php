@@ -16,12 +16,16 @@ class SocialAuthController extends Controller
     public function getSocialRedirect($account)
     {
         try {
-            //return Socialite::with($account)->redirect();
-            return Socialite::driver('facebook')->fields([
-                'first_name', 'last_name', 'email', 'gender', 'birthday', 'location'
-            ])->scopes([
+
+            $facebookScope = [
                 'email', 'user_birthday', 'user_location'
-            ])->redirect();
+            ];
+            $facebookFields = [
+                'first_name', 'last_name', 'email', 'gender', 'birthday', 'location'
+            ];
+
+            return Socialite::driver('facebook')->fields($facebookFields)->scopes($facebookScope)->redirect();
+
 
         } catch (\InvalidArgumentException $e) {
             return redirect('/login');

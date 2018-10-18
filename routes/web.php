@@ -12,7 +12,7 @@
  */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
 Route::get('/privacy', function () {
@@ -20,7 +20,7 @@ Route::get('/privacy', function () {
 });
 
 Route::get('/login/{social}', 'SocialAuthController@getSocialRedirect')
-    ->middleware('guest');
+    ->middleware('guest')->name('social.login');
 
 Route::get('/login/{social}/callback', 'SocialAuthController@getSocialCallback')
     ->middleware('guest');
