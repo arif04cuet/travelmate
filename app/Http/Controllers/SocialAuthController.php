@@ -71,8 +71,13 @@ class SocialAuthController extends Controller
             $profile = new Profile();
 
             $profile->gender = isset($socialDetailsUser['gender']) ? $socialDetailsUser['gender'] : '';
-            $profile->birthday = isset($socialDetailsUser['birthday']) ? \DateTime::createFromFormat('m/d/Y', $socialDetailsUser['birthday'])->format('Y-m-d H:i:s') : '';
             $profile->location = isset($socialDetailsUser['location']) ? $socialDetailsUser['location']['name'] : '';
+
+            if (isset($socialDetailsUser['birthday']))
+                $profile->birthday = \DateTime::createFromFormat('m/d/Y', $socialDetailsUser['birthday'])->format('Y-m-d H:i:s');;
+
+
+            
 
 
             //Transaction
